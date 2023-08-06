@@ -1,22 +1,14 @@
 import React from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom'
-import RegisterForm from './components/forms/RegisterForm';
-import SignInForm from './components/forms/SignInForm';
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom'
 import Dashboard from './components/dashboard/Dashboard';
+import Login from './components/login/Login';
+
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="container">
-        <div className="image">
-          <img src="path/to/image.jpg" alt="Image" />
-        </div>
-        <div className="forms">
-          <RegisterForm />
-          <SignInForm />
-        </div>
-      </div>
       <Routes>
+        <Route path="/" element={<Login/>}/>
         <Route path="/dashboard/" element={<Dashboard/>}/>
       </Routes>
     </BrowserRouter>
