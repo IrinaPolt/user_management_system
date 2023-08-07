@@ -25,8 +25,8 @@ const SignInForm = () => {
       },
     })
       .then((response) => {
-        const accessToken = response.data['auth_token']
-        Cookies.set('access_token', accessToken, {expires: 7});
+        const accessToken = 'Token ' + response.data['auth_token']
+        Cookies.set('Authorization', accessToken, {expires: 7});
         navigate('/dashboard/');
       })
       .catch((error) => {
@@ -47,7 +47,7 @@ const SignInForm = () => {
           <label htmlFor="password">Password:</label>
           <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
         </div>
-        <button type="submit">Sign In</button>
+        <button type="signin">Sign In</button>
       </form>
     </div>
   );

@@ -12,6 +12,7 @@
   .form h2 {
     text-align: center;
     margin-bottom: 5px;
+    color: #333;
   }
   
   .form-group {
@@ -19,12 +20,14 @@
   }
   
   .form-group label {
+    color: #333;
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
   }
   
   .form-group input {
+    color: #333;
     width: 90%;
     padding: 5px;
     border: 1px solid #ccc;
@@ -32,7 +35,7 @@
     font-size: 14px;
   }
   
-  button[type="submit"] {
+  button {
     display: block;
     width: 100%;
     padding: 10px;
@@ -42,8 +45,23 @@
     color: #fff;
     font-size: 16px;
     cursor: pointer;
+    margin-bottom: 3px;
   }
   
-  button[type="submit"]:hover {
+  button:hover {
     background-color: #841ee4;
+  }
+
+  #update label {
+    display: block;
+    font-weight: bold;
+    margin: 10px 0 5px 0;
+  }
+
+  #update input {
+    width: 90%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
   }

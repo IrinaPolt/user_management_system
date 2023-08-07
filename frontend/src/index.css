@@ -13,7 +13,7 @@ code {
 }
 
 #root {
-  background-image: url('./background.jpg');
+  background-image: url('./components/utils/background.jpg');
   min-height: 100vh;
   display: flex;
   justify-content: center;

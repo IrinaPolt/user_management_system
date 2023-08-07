@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import axios from 'axios';
 import './Forms.css';
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -23,7 +26,21 @@ const RegisterForm = () => {
       },
     })
       .then((response) => {
-        // Обработка успешной регистрации
+        if (response.status == 201) {
+          axios.post('http://127.0.0.1:8000/api/auth/token/login/', formData, {
+              headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+          .then((response) => {
+            const accessToken = 'Token ' + response.data['auth_token']
+            Cookies.set('Authorization', accessToken, {expires: 7});
+            navigate('/dashboard/');
+          })
+          .catch((error) => {
+            console.error(error.response.data);
+          });
+        }
       })
       .catch((error) => {
         console.error(error.response.data);
