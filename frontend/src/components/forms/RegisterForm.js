@@ -38,14 +38,14 @@ const RegisterForm = () => {
             navigate('/dashboard/');
           })
           .catch((error) => {
-            console.error(error.response.data.message);
-            window.alert(error.response.message);
+            console.error(error.response.data);
+            window.alert('Login error');
           });
         }
       })
       .catch((error) => {
-        console.error(error.response.data.message);
-        window.alert(error.response.message);
+        console.error(error.response.data);
+        window.alert('Registration error');
       });
   };
   

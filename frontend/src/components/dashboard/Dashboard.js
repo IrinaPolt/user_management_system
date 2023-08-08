@@ -61,7 +61,7 @@ const Dashboard = () => {
       handleCloseChangePasswordModal();
     } catch (error) {
       console.error('Error changing password:', error);
-      window.alert(error.response.data.message);
+      window.alert('Password must be longer than 8 characters');
     }
   };
 
@@ -91,7 +91,7 @@ const Dashboard = () => {
       navigate('/');
     } catch (error) {
       console.error('Error deleting user:', error);
-      window.alert(error.response.data);
+      window.alert('Error deleting user, try again');
     }
   };
 

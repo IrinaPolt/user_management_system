@@ -66,7 +66,7 @@ const UpdateProfileForm = ({ userData }) => {
       window.location.reload();
     } catch (error) {
       console.error('Error updating profile:', error);
-      window.alert(error.response.data.message);
+      window.alert('Error updating profile');
     }
   };
 

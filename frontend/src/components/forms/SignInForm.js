@@ -32,7 +32,7 @@ const SignInForm = () => {
       })
       .catch((error) => {
         console.error(error.response.data);
-        window.alert(error.response.data);
+        window.alert('Login error');
       });
   };
   
