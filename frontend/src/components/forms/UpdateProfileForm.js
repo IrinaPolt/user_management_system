@@ -5,6 +5,7 @@ import './Forms.css';
 
 
 const UpdateProfileForm = ({ userData }) => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const UpdateProfileForm = ({ userData }) => {
     e.preventDefault();
     try {
       await axios.patch(
-        'http://127.0.0.1:8000/api/users/me/',
+        `${backendUrl}/api/users/me/`,
         formData,
         {
           headers: {
@@ -75,7 +76,7 @@ const UpdateProfileForm = ({ userData }) => {
         <label htmlFor="last_name">Last Name:</label>
         <input type="text" id="last_name" name="last_name" value={formData.last_name} onChange={handleChange} />
         <label htmlFor="last_name">Password:</label>
-        <input type="text" id="password" name="password" value={formData.password} onChange={handleChange} />
+        <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
       </div>
       <br></br>
       <button>Update profile info</button>

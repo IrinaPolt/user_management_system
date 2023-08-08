@@ -5,6 +5,7 @@ import axios from 'axios';
 import './Forms.css';
 
 const RegisterForm = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
@@ -19,15 +20,15 @@ const RegisterForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    axios.post('http://127.0.0.1:8000/api/users/', formData, {
+    console.log(`${backendUrl}`)
+    axios.post(`${backendUrl}/api/users/`, formData, {
       headers: {
         'Content-Type': 'application/json',
       },
     })
       .then((response) => {
-        if (response.status == 201) {
-          axios.post('http://127.0.0.1:8000/api/auth/token/login/', formData, {
+        if (response.status === 201) {
+          axios.post(`${backendUrl}/api/auth/token/login/`, formData, {
               headers: {
               'Content-Type': 'application/json',
             },

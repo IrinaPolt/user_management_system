@@ -8,6 +8,7 @@ import UpdateProfileForm from '../forms/UpdateProfileForm';
 import placeholderImage from '../utils/placeholder.jpg';
 
 const Dashboard = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const navigate = useNavigate();
   const [user, setUser] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,7 +21,7 @@ const Dashboard = () => {
   const fetchUser = async () => {
     try {
       const response = await axios.get(
-        'http://127.0.0.1:8000/api/users/me/',
+        `${backendUrl}/api/users/me/`,
         {
           headers: {
             'Authorization': Cookies.get('Authorization'),
@@ -30,6 +31,7 @@ const Dashboard = () => {
       
     } catch (error) {
       console.error('Error fetching user:', error);
+      navigate('/');
     }
   };
 
@@ -43,7 +45,7 @@ const Dashboard = () => {
 
   const handleDeleteUser = async () => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/users/me/`,
+      await axios.delete(`${backendUrl}/api/users/me/`,
       {
         data: {"current_password": confirmPassword},
         headers: {
