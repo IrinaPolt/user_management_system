@@ -1,6 +1,6 @@
 # user_management_system
 
-### Description
+## Description
 
 A user management web application with frontend (React) and backend (Django and DRF) components. The project adheres to industry best practices for security, performance, and code organization. It employs a range of technologies to deliver a reliable and efficient user experience.
 
@@ -20,6 +20,9 @@ DB_PORT=
 cd infra/
 docker-compose up --build
 ```
+### Available endpoints
+
+[Swagger](http://localhost:8000/swagger/) + frontend at localhost:3000
 
 ### To create a superuser
 
