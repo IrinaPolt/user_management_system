@@ -13,6 +13,9 @@ const Dashboard = () => {
   const [user, setUser] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
 
   useEffect(() => {
     fetchUser();
@@ -33,6 +36,38 @@ const Dashboard = () => {
       console.error('Error fetching user:', error);
       navigate('/');
     }
+  };
+
+  const handleOpenChangePasswordModal = () => {
+    setChangePasswordModalOpen(true);
+  };
+
+  const handleCloseChangePasswordModal = () => {
+    setChangePasswordModalOpen(false);
+    setNewPassword('');
+  };
+
+  const handleChangePassword = async() => {
+    try {
+      await axios.post(`${backendUrl}/api/users/set_password/`,
+      {
+        new_password: newPassword,
+        current_password: currentPassword,
+      }, {
+        headers: {
+          'Authorization': Cookies.get('Authorization'),
+        }
+      });
+      handleCloseChangePasswordModal();
+    } catch (error) {
+      console.error('Error changing password:', error);
+      window.alert(error.response.data.message);
+    }
+  };
+
+  const handleLogoutButtonClick = () => {
+    Cookies.remove('Authorization');
+    navigate('/');
   };
 
   const handleDeleteButtonClick = () => {
@@ -56,6 +91,7 @@ const Dashboard = () => {
       navigate('/');
     } catch (error) {
       console.error('Error deleting user:', error);
+      window.alert(error.response.data);
     }
   };
 
@@ -74,8 +110,14 @@ const Dashboard = () => {
         ) : (
           <p>Loading...</p>
         )}
+        <button className="password-button" onClick={handleOpenChangePasswordModal}>
+          Change profile password
+        </button>
         <button className="delete-button" onClick={handleDeleteButtonClick}>
           Delete profile
+        </button>
+        <button className="logout-button" onClick={handleLogoutButtonClick}>
+          Logout
         </button>
 
         <Modal
@@ -96,6 +138,32 @@ const Dashboard = () => {
             <button onClick={handleModalClose}>Cancel</button>
           </div>
         </Modal>
+
+        <Modal
+          isOpen={isChangePasswordModalOpen}
+          onRequestClose={handleCloseChangePasswordModal}
+          className="modal"
+          overlayClassName="overlay"
+        >
+        <div>
+          <h2>Change Password</h2>
+          <p>Enter your current password:</p>
+          <input
+            type="password"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+          />
+          <p>Enter your new password:</p>
+          <input
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+          <button onClick={handleChangePassword}>Change Password</button>
+          <button onClick={handleCloseChangePasswordModal}>Cancel</button>
+        </div>
+      </Modal>
+
       </div>
     </div>
   );

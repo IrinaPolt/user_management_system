@@ -20,7 +20,6 @@ const RegisterForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`${backendUrl}`)
     axios.post(`${backendUrl}/api/users/`, formData, {
       headers: {
         'Content-Type': 'application/json',
@@ -39,12 +38,14 @@ const RegisterForm = () => {
             navigate('/dashboard/');
           })
           .catch((error) => {
-            console.error(error.response.data);
+            console.error(error.response.data.message);
+            window.alert(error.response.message);
           });
         }
       })
       .catch((error) => {
-        console.error(error.response.data);
+        console.error(error.response.data.message);
+        window.alert(error.response.message);
       });
   };
   

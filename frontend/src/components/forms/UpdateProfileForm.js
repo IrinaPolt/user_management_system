@@ -7,6 +7,7 @@ import './Forms.css';
 const UpdateProfileForm = ({ userData }) => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const [formData, setFormData] = useState({});
+  const [isNewPhotoUploaded, setIsNewPhotoUploaded] = useState(false);
 
   useEffect(() => {
     setFormData((prevFormData) => ({
@@ -16,9 +17,9 @@ const UpdateProfileForm = ({ userData }) => {
       first_name: userData.first_name,
       last_name: userData.last_name,
       picture: userData.picture,
-      password: ''
     }));
   }, [userData]);
+
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -27,6 +28,7 @@ const UpdateProfileForm = ({ userData }) => {
       const file = e.target.files[0];
       const reader = new FileReader();
       reader.readAsDataURL(file);
+      setIsNewPhotoUploaded(true);
       reader.onloadend = () => {
         setFormData((prevFormData) => ({
           ...prevFormData,
@@ -44,7 +46,12 @@ const UpdateProfileForm = ({ userData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isNewPhotoUploaded) {
+      delete formData.picture;
+    }
+
     try {
+      console.log(formData)
       await axios.patch(
         `${backendUrl}/api/users/me/`,
         formData,
@@ -56,8 +63,10 @@ const UpdateProfileForm = ({ userData }) => {
         }
       );
       console.log('Profile updated successfully');
+      window.location.reload();
     } catch (error) {
       console.error('Error updating profile:', error);
+      window.alert(error.response.data.message);
     }
   };
 
@@ -75,8 +84,6 @@ const UpdateProfileForm = ({ userData }) => {
         <input type="text" id="first_name" name="first_name" value={formData.first_name} onChange={handleChange} />
         <label htmlFor="last_name">Last Name:</label>
         <input type="text" id="last_name" name="last_name" value={formData.last_name} onChange={handleChange} />
-        <label htmlFor="last_name">Password:</label>
-        <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
       </div>
       <br></br>
       <button>Update profile info</button>
